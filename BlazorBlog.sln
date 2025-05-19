@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36109.1 d17.14
+VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorBlog.WebUI.Server", "BlazorBlog.WebUI.Server\BlazorBlog.WebUI.Server.csproj", "{7D70A0A2-2EFE-49F8-BAFA-39AA18B54D05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorBlog.Domain", "BlazorBlog.Domain\BlazorBlog.Domain.csproj", "{97141C5E-6A4E-4330-BBB6-6D0A46623CB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorBlog.Application", "BlazorBlog.Application\BlazorBlog.Application.csproj", "{A8772542-9F96-4B8B-90FE-0F2D0EFCD8ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +21,22 @@ Global
 		{7D70A0A2-2EFE-49F8-BAFA-39AA18B54D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D70A0A2-2EFE-49F8-BAFA-39AA18B54D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D70A0A2-2EFE-49F8-BAFA-39AA18B54D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97141C5E-6A4E-4330-BBB6-6D0A46623CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97141C5E-6A4E-4330-BBB6-6D0A46623CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97141C5E-6A4E-4330-BBB6-6D0A46623CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97141C5E-6A4E-4330-BBB6-6D0A46623CB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8772542-9F96-4B8B-90FE-0F2D0EFCD8ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8772542-9F96-4B8B-90FE-0F2D0EFCD8ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8772542-9F96-4B8B-90FE-0F2D0EFCD8ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8772542-9F96-4B8B-90FE-0F2D0EFCD8ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7D70A0A2-2EFE-49F8-BAFA-39AA18B54D05} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{97141C5E-6A4E-4330-BBB6-6D0A46623CB2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A8772542-9F96-4B8B-90FE-0F2D0EFCD8ED} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DBEE3C1C-91FA-466F-83AB-1ACC865EB5F4}
