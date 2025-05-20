@@ -10,13 +10,15 @@ namespace BlazorBlog.Application.Articles;
 
 public class ArticleService : IArticleService
 {
-    public List<Article> GetAllArticles()
+    private readonly IArticleRepository _articleRepository;
+
+    public ArticleService(IArticleRepository articleRepository)
     {
-        return new List<Article>
-        {
-            new Article { Id = 1, Title = "First Article", Content = "This is the content of the first article.", DatePublished = DateTime.Now, IsPublished = true },
-            new Article { Id = 2, Title = "Second Article", Content = "This is the content of the second article.", DatePublished = DateTime.Now, IsPublished = false },
-            new Article { Id = 3, Title = "Third Article", Content = "This is the content of the third article.", DatePublished = DateTime.Now, IsPublished = true }
-        };
+        _articleRepository = articleRepository;
+    }
+
+    public async Task<List<Article>> GetAllArticlesAsync()
+    {
+        return await _articleRepository.GetAllArticlesAsync();
     }
 }
