@@ -1,5 +1,7 @@
 ﻿using BlazorBlog.Domain.Articles;
 
+using Mapster;
+
 using MediatR;
 
 using System;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BlazorBlog.Application.Articles.CreateArticle;
 
-public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand, Article>
+public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand, ArticleResponse>
 {
     private readonly IArticleRepository _articleRepository;
 
@@ -19,18 +21,12 @@ public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand,
         _articleRepository = articleRepository;
     }
 
-    public async Task<Article> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
+    public async Task<ArticleResponse> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
     {
-        var newArticle = new Article
-        {
-            Title = request.Title,
-            Content = request.Content,
-            DatePublished = request.DatePublished,
-            IsPublished = request.IsPublished
-        };
+        var newArticle = request.Adapt<Article>();
 
         var article = await _articleRepository.CreateArticleAsync(newArticle);
 
-        return article;
+        return article.Adapt<ArticleResponse>();
     }
 }
