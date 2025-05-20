@@ -18,8 +18,6 @@ public static class DependencyInjection
         {
             configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
         });
-        
-        services.AddScoped<IArticleService, ArticleService>();
 
         return services;
     }
