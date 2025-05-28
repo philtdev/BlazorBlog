@@ -21,4 +21,19 @@ public class Result
     public static Result Ok() => new(true);
 
     public static Result Fail(string errorMessage) => new(false, errorMessage);
+
+    public static Result<T> Ok<T>(T value) => new(value, true, string.Empty);
+
+    public static Result<T> Fail<T>(string errorMessage) => new(default, false, errorMessage);
+}
+
+public class Result<T> : Result
+{
+    public T? Value { get; }
+
+    protected internal Result(T? value, bool success, string errorMessage)
+        : base(success, errorMessage)
+    {
+        Value = value;
+    }
 }
