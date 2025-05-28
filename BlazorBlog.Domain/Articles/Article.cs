@@ -1,11 +1,5 @@
 ﻿using BlazorBlog.Domain.Abstractions;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace BlazorBlog.Domain.Articles;
 
 public class Article : Entity
