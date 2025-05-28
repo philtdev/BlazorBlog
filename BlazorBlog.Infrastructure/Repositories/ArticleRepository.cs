@@ -46,7 +46,7 @@ public class ArticleRepository : IArticleRepository
 
         if (articleToUpdate is null)
         {
-             return null;
+            return null;
         }
 
         articleToUpdate.Title = article.Title;
@@ -58,5 +58,21 @@ public class ArticleRepository : IArticleRepository
         await _context.SaveChangesAsync();
 
         return articleToUpdate;
+    }
+
+    public async Task<bool> DeleteArticleAsync(int id)
+    {
+        var articleToDelete = await GetArticleByIdAsync(id);
+
+        if (articleToDelete is null)
+        {
+            return false;
+        }
+
+        _context.Articles.Remove(articleToDelete);
+
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 }
