@@ -1,19 +1,6 @@
-﻿using BlazorBlog.Domain.Articles;
+﻿namespace BlazorBlog.Application.Articles.GetArticles;
 
-using Mapster;
-
-using MediatR;
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlazorBlog.Application.Articles.GetArticles;
-
-public class GetArticlesQueryHandler : IRequestHandler<GetArticlesQuery, List<ArticleResponse>>
+public class GetArticlesQueryHandler : IQueryHandler<GetArticlesQuery, List<ArticleResponse>>
 {
     private readonly IArticleRepository _articleRepository;
 
@@ -22,7 +9,7 @@ public class GetArticlesQueryHandler : IRequestHandler<GetArticlesQuery, List<Ar
         _articleRepository = articleRepository;
     }
 
-    public async Task<List<ArticleResponse>> Handle(GetArticlesQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<ArticleResponse>>> Handle(GetArticlesQuery request, CancellationToken cancellationToken)
     {
         var articles = await _articleRepository.GetAllArticlesAsync();
 

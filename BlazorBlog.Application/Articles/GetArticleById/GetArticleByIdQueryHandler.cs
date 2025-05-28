@@ -1,18 +1,6 @@
-﻿using BlazorBlog.Domain.Articles;
+﻿namespace BlazorBlog.Application.Articles.GetArticleById;
 
-using Mapster;
-
-using MediatR;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlazorBlog.Application.Articles.GetArticleById;
-
-public class GetArticleByIdQueryHandler : IRequestHandler<GetArticleByIdQuery, ArticleResponse?>
+public class GetArticleByIdQueryHandler : IQueryHandler<GetArticleByIdQuery, ArticleResponse?>
 {
     private readonly IArticleRepository _articleRepository;
 
@@ -21,13 +9,13 @@ public class GetArticleByIdQueryHandler : IRequestHandler<GetArticleByIdQuery, A
         _articleRepository = articleRepository;
     }
 
-    public async Task<ArticleResponse?> Handle(GetArticleByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<ArticleResponse?>> Handle(GetArticleByIdQuery request, CancellationToken cancellationToken)
     {
         var result = await _articleRepository.GetArticleByIdAsync(request.Id);
 
         if (result is null)
         {
-            return null;
+            return Result.Fail<ArticleResponse?>("The article does not exist.");
         }
 
         return result.Adapt<ArticleResponse>();

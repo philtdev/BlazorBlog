@@ -1,14 +1,6 @@
-﻿using MediatR;
+﻿namespace BlazorBlog.Application.Articles.GetArticleById;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlazorBlog.Application.Articles.GetArticleById;
-
-public class GetArticleByIdQuery : IRequest<ArticleResponse?>
+public class GetArticleByIdQuery : IQuery<ArticleResponse?>
 {
     public int Id { get; set; }
 }

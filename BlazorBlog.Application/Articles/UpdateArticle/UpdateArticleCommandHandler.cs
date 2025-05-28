@@ -1,18 +1,6 @@
-﻿using BlazorBlog.Domain.Articles;
+﻿namespace BlazorBlog.Application.Articles.UpdateArticle;
 
-using Mapster;
-
-using MediatR;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlazorBlog.Application.Articles.UpdateArticle;
-
-public class UpdateArticleCommandHandler : IRequestHandler<UpdateArticleCommand, ArticleResponse?>
+public class UpdateArticleCommandHandler : ICommandHandler<UpdateArticleCommand, ArticleResponse?>
 {
     private readonly IArticleRepository _articleRepository;
 
@@ -21,7 +9,7 @@ public class UpdateArticleCommandHandler : IRequestHandler<UpdateArticleCommand,
         _articleRepository = articleRepository;
     }
 
-    public async Task<ArticleResponse?> Handle(UpdateArticleCommand request, CancellationToken cancellationToken)
+    public async Task<Result<ArticleResponse?>> Handle(UpdateArticleCommand request, CancellationToken cancellationToken)
     {
         var updatedArticle = request.Adapt<Article>();
 
@@ -29,7 +17,7 @@ public class UpdateArticleCommandHandler : IRequestHandler<UpdateArticleCommand,
 
         if (article is null)
         {
-            return null;
+            return Result.Fail<ArticleResponse?>("The article does not exist.");
         }
 
         return article.Adapt<ArticleResponse>();
