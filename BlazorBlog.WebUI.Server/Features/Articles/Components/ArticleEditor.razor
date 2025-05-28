@@ -41,8 +41,11 @@ else
     }
 }
 
+<span class="text-danger">@errorMessage</span>
+
 @code {
     private bool isEditMode => ArticleId != null;
+    private string errorMessage = string.Empty;
 
     [SupplyParameterFromForm]
 
@@ -59,10 +62,14 @@ else
                 new GetArticleByIdQuery { Id = (int)ArticleId }
             );
 
-            if (result is not null)
+            if (result.Success)
             {
-                Article ??= result.Adapt<ArticleModel>();
+                Article ??= result.Value.Adapt<ArticleModel>();
                 Article.Id = (int)ArticleId;
+            }
+            else
+            {
+                SetErrorMessage(result.Error);
             }
         }
         else
@@ -79,11 +86,14 @@ else
 
             var result = await Sender.Send(command);
 
-            if (result is not null)
+            if (result.Success)
             {
-                Article = result.Adapt<ArticleModel>();
+                Article = result.Value.Adapt<ArticleModel>();
             }
-
+            else
+            {
+                SetErrorMessage(result.Error);
+            }
         }
         else
         {
@@ -91,7 +101,14 @@ else
 
             var result = await Sender.Send(command);
 
-            NavigationManager.NavigateTo($"/article-editor/{result.Id}", true);
+            if (result.Success)
+            {
+                NavigationManager.NavigateTo($"/article-editor/{result.Value.Id}", true);
+            }
+            else
+            {
+                SetErrorMessage(result.Error);
+            }
         }
     }
 
@@ -104,11 +121,20 @@ else
 
         var command = new DeleteArticleCommand { Id = (int)ArticleId };
 
-        var isSuccess = await Sender.Send(command);
+        var result = await Sender.Send(command);
 
-        if (isSuccess)
+        if (result.Success)
         {
             NavigationManager.NavigateTo("/articles");
         }
+        else
+        {
+            SetErrorMessage(result.Error);
+        }
+    }
+
+    void SetErrorMessage(string? error)
+    {
+        errorMessage = error ?? string.Empty;
     }
 }
