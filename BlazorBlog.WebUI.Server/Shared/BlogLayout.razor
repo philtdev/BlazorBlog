@@ -6,9 +6,23 @@
             <a rel="noopener noreferrer" href="#" class="block h-6 text-2xl font-semibold">Leroy Jenkins</a>
             <div class="flex items-center">
                 <div class="hidden space-x-2 font-medium sm:block">
+                    <AuthorizeView>
+                        <Authorized>
+                            <span class="p-1">
+                                Hi @context.User.Identity?.Name!
+                            </span>
+                        </Authorized>
+                    </AuthorizeView>
                     <a rel="noopener noreferrer" href="/" class="p-1">Articles</a>
-                    <a rel="noopener noreferrer" href="/register" class="p-1">Register</a>
-                    <a rel="noopener noreferrer" href="/login" class="p-1">Login</a>
+                    <AuthorizeView>
+                        <Authorized>
+                            <a href="/logout" class="p-1">Logout</a>
+                        </Authorized>
+                        <NotAuthorized>
+                        <a href="/register" class="p-1">Register</a>
+                        <a href="/login" class="p-1">Login</a>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </div>
             </div>
         </header>
