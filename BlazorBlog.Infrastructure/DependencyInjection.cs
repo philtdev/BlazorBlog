@@ -1,5 +1,6 @@
 ﻿using BlazorBlog.Application.Authentication;
 using BlazorBlog.Domain.Articles;
+using BlazorBlog.Domain.Users;
 using BlazorBlog.Infrastructure.Authentication;
 using BlazorBlog.Infrastructure.Repositories;
 
@@ -25,6 +26,7 @@ public static class DependencyInjection
         AddAuthentication(services);
 
         services.AddScoped<IArticleRepository, ArticleRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
