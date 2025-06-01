@@ -3,6 +3,7 @@ using BlazorBlog.Domain.Articles;
 using BlazorBlog.Infrastructure.Authentication;
 using BlazorBlog.Infrastructure.Repositories;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +31,8 @@ public static class DependencyInjection
 
     private static void AddAuthentication(IServiceCollection services)
     {
+        services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationMiddlewareResultHandler>();
+
         services.AddScoped<IAuthenticationService, AuthenticationService>();
 
         services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
