@@ -17,8 +17,4 @@
     <ProjectReference Include="..\BlazorBlog.Infrastructure\BlazorBlog.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\" />
-  </ItemGroup>
-
 </Project>
