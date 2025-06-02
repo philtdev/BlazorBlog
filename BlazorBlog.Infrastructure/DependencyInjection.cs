@@ -27,6 +27,8 @@ public static class DependencyInjection
 
         AddAuthentication(services);
 
+        services.AddHttpContextAccessor();
+
         services.AddScoped<IArticleRepository, ArticleRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
