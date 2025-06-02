@@ -3,7 +3,7 @@ using BlazorBlog.Domain.Users;
 
 using Microsoft.AspNetCore.Identity;
 
-namespace BlazorBlog.Infrastructure.Authentication;
+namespace BlazorBlog.Infrastructure.Users;
 
 public class User : IdentityUser, IUser
 {

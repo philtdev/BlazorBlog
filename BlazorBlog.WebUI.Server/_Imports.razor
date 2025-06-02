@@ -6,14 +6,18 @@
 @using Microsoft.AspNetCore.Components.Web
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.JSInterop
-@using BlazorBlog.WebUI.Server
-@using BlazorBlog.WebUI.Server.Shared
-@using BlazorBlog.Domain.Articles
 @using BlazorBlog.Application.Articles
 @using BlazorBlog.Application.Articles.CreateArticle
 @using BlazorBlog.Application.Articles.GetArticles
 @using BlazorBlog.Application.Articles.GetArticleById
 @using BlazorBlog.Application.Articles.UpdateArticle
+@using BlazorBlog.Domain.Articles
+@using BlazorBlog.Infrastructure.Authentication
+@using BlazorBlog.Infrastructure.Users
+@using BlazorBlog.WebUI.Server
+@using BlazorBlog.WebUI.Server.Shared
 @using Mapster
 @using MediatR
+

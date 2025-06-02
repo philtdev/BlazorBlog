@@ -1,4 +1,5 @@
 ﻿using BlazorBlog.Application.Authentication;
+using BlazorBlog.Infrastructure.Users;
 
 using Microsoft.AspNetCore.Identity;
 
