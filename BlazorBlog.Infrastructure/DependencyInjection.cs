@@ -49,6 +49,7 @@ public static class DependencyInjection
             .AddIdentityCookies();
 
         services.AddIdentityCore<User>()
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();
