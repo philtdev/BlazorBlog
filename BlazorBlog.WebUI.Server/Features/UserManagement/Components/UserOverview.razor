@@ -10,12 +10,21 @@
 
     <h2 class="text-3xl font-extrabold text-gray-50">User Overview</h2>
 
-    <ul>
-        @foreach (var user in users)
-        {
-            <li>@user.UserName - @user.Email</li>
-        }
-    </ul>
+    @if (users is null)
+    {
+        <span>Loading users...</span>
+    }
+    else if (users.Count == 0)
+    {
+        <span>No users found.</span>
+    }
+    else
+    {
+        <QuickGrid Items="users.AsQueryable()">
+            <PropertyColumn Property="@(u => u.UserName)" Sortable="true" Title="Username" />
+            <PropertyColumn Property="@(u => u.Email)" Sortable="true" Title="Email" />
+        </QuickGrid>
+    }
 </div>
 
 @code {
