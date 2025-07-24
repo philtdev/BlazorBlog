@@ -21,7 +21,16 @@ public class GetUsersQueryHandler : IQueryHandler<GetUsersQuery, List<UserRespon
 
         var users = await _userRepository.GetAllUsersAsync();
 
-        var response = users.Adapt<List<UserResponse>>();
+        var response = new List<UserResponse>();
+
+        foreach (var user in users)
+        {
+            var userResponse = user.Adapt<UserResponse>();
+
+            userResponse.Roles = string.Join(", ", await _userService.GetUserRolesAsync(user.Id));
+
+            response.Add(userResponse);
+        }
 
         return response;
     }

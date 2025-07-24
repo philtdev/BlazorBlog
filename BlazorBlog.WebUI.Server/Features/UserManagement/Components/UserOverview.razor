@@ -23,6 +23,7 @@
         <QuickGrid Items="users.AsQueryable()">
             <PropertyColumn Property="@(u => u.UserName)" Sortable="true" Title="Username" />
             <PropertyColumn Property="@(u => u.Email)" Sortable="true" Title="Email" />
+            <PropertyColumn Property="@(u => u.Roles)" Sortable="true" Title="Roles" />
         </QuickGrid>
     }
 </div>
