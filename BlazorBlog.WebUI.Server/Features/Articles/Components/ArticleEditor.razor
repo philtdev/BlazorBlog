@@ -79,14 +79,10 @@ else
                 Article.Id = (int)ArticleId;
             }
             else
-            {
                 SetErrorMessage(result.Error);
-            }
         }
         else
-        {
             Article ??= new();
-        }
     }
 
     async Task HandleSubmit()
@@ -98,13 +94,9 @@ else
             var result = await Sender.Send(command);
 
             if (result.Success)
-            {
                 Article = result.Value.Adapt<ArticleModel>();
-            }
             else
-            {
                 SetErrorMessage(result.Error);
-            }
         }
         else
         {
@@ -113,35 +105,25 @@ else
             var result = await Sender.Send(command);
 
             if (result.Success)
-            {
                 NavigationManager.NavigateTo($"/article-editor/{result.Value.Id}", true);
-            }
             else
-            {
                 SetErrorMessage(result.Error);
-            }
         }
     }
 
     async Task DeleteArticle()
     {
         if (ArticleId is null)
-        {
             return;
-        }
 
         var command = new DeleteArticleCommand { Id = (int)ArticleId };
 
         var result = await Sender.Send(command);
 
         if (result.Success)
-        {
-            NavigationManager.NavigateTo("/articles");
-        }
+            NavigationManager.NavigateTo("/");
         else
-        {
             SetErrorMessage(result.Error);
-        }
     }
 
     void SetErrorMessage(string? error)
