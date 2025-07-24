@@ -24,12 +24,20 @@
             <PropertyColumn Property="@(u => u.UserName)" Sortable="true" Title="Username" />
             <PropertyColumn Property="@(u => u.Email)" Sortable="true" Title="Email" />
             <PropertyColumn Property="@(u => u.Roles)" Sortable="true" Title="Roles" />
+            <TemplateColumn>
+                <button @onclick="() => OpenModal(context.Id, context.UserName)" class="btn btn-primary">
+                    Manage Roles
+                </button>
+            </TemplateColumn>
         </QuickGrid>
     }
 </div>
 
 @code {
     private List<UserResponse>? users = new();
+    private bool showModal = false;
+    private string selectedUserId = string.Empty;
+    private string selectedUserName = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -39,5 +47,18 @@
             users = result;
         else
             users = new();
+    }
+
+    private void OpenModal(string userId, string userName)
+    {
+        selectedUserId = userId;
+        selectedUserName = userName;
+        showModal = true;
+        Console.WriteLine($"Opening modal for user: {selectedUserName} ({selectedUserId})");
+    }
+
+    private void ToggleShowModal()
+    {
+        showModal = !showModal;
     }
 }
