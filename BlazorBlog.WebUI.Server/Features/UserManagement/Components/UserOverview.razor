@@ -25,13 +25,18 @@
             <PropertyColumn Property="@(u => u.Email)" Sortable="true" Title="Email" />
             <PropertyColumn Property="@(u => u.Roles)" Sortable="true" Title="Roles" />
             <TemplateColumn>
-                <button @onclick="() => OpenModal(context.Id, context.UserName)" class="btn btn-primary">
+                <button @onclick="() => OpenModal(context.Id, context.UserName)" class="px-6 py-2 rounded-sm shadow-sm bg-blue-400 text-gray-900 hover:bg-blue-300">
                     Manage Roles
                 </button>
             </TemplateColumn>
         </QuickGrid>
     }
 </div>
+
+<UserRolesModal ShowModal="showModal"
+                UserId="@selectedUserId"
+                UserName="@selectedUserName"
+                ModalChanged="CloseModal" />
 
 @code {
     private List<UserResponse>? users = new();
@@ -57,8 +62,8 @@
         Console.WriteLine($"Opening modal for user: {selectedUserName} ({selectedUserId})");
     }
 
-    private void ToggleShowModal()
+    private void CloseModal()
     {
-        showModal = !showModal;
+        showModal = false;
     }
 }
