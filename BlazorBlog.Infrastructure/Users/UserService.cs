@@ -1,4 +1,5 @@
-﻿using BlazorBlog.Application.Users;
+﻿using BlazorBlog.Application.Exceptions;
+using BlazorBlog.Application.Users;
 using BlazorBlog.Domain.Articles;
 
 using Microsoft.AspNetCore.Http;
@@ -19,24 +20,57 @@ public class UserService : IUserService
         _articleRepository = articleRepository;
     }
 
-    public Task<bool> CurrentUserCanCreateArticlesAsync()
+    public async Task<bool> CurrentUserCanCreateArticlesAsync()
     {
-        throw new NotImplementedException();
+        var user = await GetCurrentUserAsync();
+
+        if (user is null)
+            return false;
+
+        var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+        var isWriter = await _userManager.IsInRoleAsync(user, "Writer");
+
+        var result = isAdmin || isWriter;
+
+        return result;
     }
 
-    public Task<bool> CurrentUserCanEditArticleAsync(int articleId)
+    public async Task<bool> CurrentUserCanEditArticleAsync(int articleId)
     {
-        throw new NotImplementedException();
+        var user = await GetCurrentUserAsync();
+
+        if (user is null)
+            return false;
+
+        var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+        var isWriter = await _userManager.IsInRoleAsync(user, "Writer");
+
+        var article = await _articleRepository.GetArticleByIdAsync(articleId);
+
+        if (article is null)
+            return false;
+
+        var result = isAdmin || (isWriter && user.Id == article.UserId);
+
+        return result;
     }
 
-    public Task<string> GetCurrentUserIdAsync()
+    public async Task<string> GetCurrentUserIdAsync()
     {
-        throw new NotImplementedException();
+        var user = await GetCurrentUserAsync();
+
+        if (user is null)
+            throw new UserNotAuthorizedException();
+
+        return user.Id;
     }
 
-    public Task<bool> IsCurrentUserInRoleAsync(string role)
+    public async Task<bool> IsCurrentUserInRoleAsync(string role)
     {
-        throw new NotImplementedException();
+        var user = await GetCurrentUserAsync();
+        var result = user is not null && await _userManager.IsInRoleAsync(user, role);
+
+        return result;
     }
 
     private async Task<User?> GetCurrentUserAsync()
@@ -44,9 +78,7 @@ public class UserService : IUserService
         var httpContext = _httpContextAccessor.HttpContext;
 
         if (httpContext is null || httpContext.User is null)
-        {
             return null;
-        }
 
         var user = await _userManager.GetUserAsync(httpContext.User);
 
