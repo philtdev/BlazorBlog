@@ -1,4 +1,5 @@
-﻿using BlazorBlog.Domain.Users;
+﻿using BlazorBlog.Application.Users;
+using BlazorBlog.Domain.Users;
 
 namespace BlazorBlog.Application.Articles.GetArticles;
 
@@ -6,11 +7,13 @@ public class GetArticlesQueryHandler : IQueryHandler<GetArticlesQuery, List<Arti
 {
     private readonly IArticleRepository _articleRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IUserService _userService;
 
-    public GetArticlesQueryHandler(IArticleRepository articleRepository, IUserRepository userRepository)
+    public GetArticlesQueryHandler(IArticleRepository articleRepository, IUserRepository userRepository, IUserService userService)
     {
         _articleRepository = articleRepository;
         _userRepository = userRepository;
+        _userService = userService;
     }
 
     public async Task<Result<List<ArticleResponse>>> Handle(GetArticlesQuery request, CancellationToken cancellationToken)
@@ -28,6 +31,8 @@ public class GetArticlesQueryHandler : IQueryHandler<GetArticlesQuery, List<Arti
                 var author = await _userRepository.GetUserByIdAsync(article.UserId);
 
                 articleResponse.UserName = author?.UserName ?? "Unknown";
+                articleResponse.UserId = article.UserId;
+                articleResponse.CanEdit = await _userService.CurrentUserCanEditArticleAsync(article.Id);
             }
             else
             {

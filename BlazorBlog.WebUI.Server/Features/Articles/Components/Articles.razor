@@ -41,11 +41,13 @@
                             <p class="max-w-full text-gray-100 prose">
                                 @article.Content
                             </p>
-                            <AuthorizeView>
+
+                            @if (article.CanEdit)
+                            {
                                 <div class="flex flex-wrap space-x-3">
                                     <a href="/article-editor/@article.Id" class="text-xs text-blue-400">Edit article</a>
                                 </div>
-                            </AuthorizeView>
+                            }
                         </div>
                     </article>
                 </li>
