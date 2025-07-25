@@ -1,6 +1,6 @@
 ﻿@page "/user-overview"
 @inject ISender Sender
-@rendermode InteractiveServer
+@rendermode @(new InteractiveServerRenderMode(false))
 @attribute [Authorize(Roles = "Admin")]
 
 
