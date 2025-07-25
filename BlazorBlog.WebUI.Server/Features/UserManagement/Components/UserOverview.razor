@@ -46,12 +46,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await Sender.Send(new GetUsersQuery());
-
-        if (result.Success)
-            users = result;
-        else
-            users = new();
+        await LoadUsers();
     }
 
     private void OpenModal(string userId, string userName)
@@ -62,8 +57,20 @@
         Console.WriteLine($"Opening modal for user: {selectedUserName} ({selectedUserId})");
     }
 
-    private void CloseModal()
+    private async Task CloseModal()
     {
         showModal = false;
+
+        await LoadUsers();
+    }
+
+    private async Task LoadUsers()
+    {
+        var result = await Sender.Send(new GetUsersQuery());
+
+        if (result.Success)
+            users = result;
+        else
+            users = new();
     }
 }

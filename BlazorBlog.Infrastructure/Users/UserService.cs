@@ -12,12 +12,35 @@ public class UserService : IUserService
     private readonly UserManager<User> _userManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IArticleRepository _articleRepository;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public UserService(UserManager<User> userManager, IHttpContextAccessor httpContextAccessor, IArticleRepository articleRepository)
+    public UserService(UserManager<User> userManager, IHttpContextAccessor httpContextAccessor, IArticleRepository articleRepository, RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _httpContextAccessor = httpContextAccessor;
         _articleRepository = articleRepository;
+        _roleManager = roleManager;
+    }
+
+    public async Task AddRoleToUserAsync(string userId, string roleName)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user is null)
+            throw new Exception("User not found.");
+
+        if (!await _roleManager.RoleExistsAsync(roleName))
+        {
+            var roleResult = await _roleManager.CreateAsync(new IdentityRole(roleName));
+
+            if (!roleResult.Succeeded)
+                throw new Exception("Failed to create role.");
+        }
+
+        var result = await _userManager.AddToRoleAsync(user, roleName);
+
+        if (!result.Succeeded)
+            throw new Exception("Failed to add role to user.");
     }
 
     public async Task<bool> CurrentUserCanCreateArticlesAsync()

@@ -60,7 +60,13 @@
     {
         if (!string.IsNullOrWhiteSpace(newRole))
         {
-            Roles.Add(newRole);
+            await Sender.Send(new AddRoleToUserCommand
+            {
+                UserId = UserId,
+                RoleName = newRole
+            });
+
+            await LoadUserRoles();
 
             newRole = string.Empty;
         }
@@ -74,6 +80,7 @@
     private void CloseModal()
     {
         ShowModal = false;
+        newRole = string.Empty;
 
         ModalChanged.InvokeAsync(ShowModal);
     }
