@@ -14,4 +14,8 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorBlog.Application\BlazorBlog.Application.csproj" />
+  </ItemGroup>
+
 </Project>
