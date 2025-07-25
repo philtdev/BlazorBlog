@@ -69,4 +69,11 @@ public class ArticleRepository : IArticleRepository
 
         return true;
     }
+
+    public async Task<List<Article>> GetArticlesByUserAsync(string userId)
+    {
+        return await _context.Articles
+            .Where(a => a.UserId == userId)
+            .ToListAsync();
+    }
 }
