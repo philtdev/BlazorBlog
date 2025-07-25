@@ -1,4 +1,4 @@
-﻿<h3>UserRolesModal</h3>
+﻿@inject ISender Sender
 
 @if (ShowModal)
 {
@@ -53,10 +53,7 @@
         Console.WriteLine("Modal is here");
         Console.WriteLine($"{UserName} // {UserId}");
 
-        if (ShowModal)
-        {
-            Roles = new List<string> { "Test" };
-        }
+        await LoadUserRoles();
     }
 
     private async Task AddRole()
@@ -79,5 +76,14 @@
         ShowModal = false;
 
         ModalChanged.InvokeAsync(ShowModal);
+    }
+
+    private async Task LoadUserRoles()
+    {
+        if (ShowModal && UserId is not null)
+        {
+            Roles = (await Sender.Send(new GetUserRolesQuery { UserId = UserId })).Value ?? [];
+        }
+
     }
 }
