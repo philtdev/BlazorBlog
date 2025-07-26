@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BlazorBlog.Application.Articles;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BlazorBlog.Application;
 
@@ -10,6 +12,8 @@ public static class DependencyInjection
         {
             configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
         });
+
+        services.AddScoped<IArticlesOverviewService, ArticlesOverviewService>();
 
         return services;
     }
