@@ -1,10 +1,11 @@
 ﻿@page "/article-overview"
 @rendermode @(new InteractiveWebAssemblyRenderMode(false))
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <PageTitle>Article Overview</PageTitle>
 
-<h3>ArticleOverview</h3>
+<h2 class="text-3xl font-extrabold text-gray-50">Article Overview</h2>
 
 @if (articles is null)
 {
@@ -16,12 +17,31 @@ else if (articles.Count == 0)
 }
 else
 {
-    <ul>
-        @foreach (var article in articles)
-        {
-            <li>@article.Title</li>
-        }
-    </ul>
+    <QuickGrid Items="articles.AsQueryable()">
+        <PropertyColumn Property="@(a => a.Title)" Sortable="true" />
+        <TemplateColumn Title="Published">
+            @if (context.IsPublished)
+            {
+                <span class="text-green-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+                </span>
+            }
+            else
+            {
+                <span class="text-red-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </span>
+            }
+        </TemplateColumn>
+        <PropertyColumn Property="@(a => a.DatePublished)" Title="Date Published" Sortable="true" />
+        <TemplateColumn>
+            <button @onclick="() => EditArticle(context.Id)" class="px-6 py-2 rounded-sm shadow-sm bg-blue-400 text-gray-900 hover:bg-blue-300">Edit</button>
+        </TemplateColumn>
+    </QuickGrid>
 }
 
 @code {
@@ -33,5 +53,10 @@ else
 
         if (articles is null)
             articles = [];
+    }
+
+    private void EditArticle(int id)
+    {
+        NavigationManager.NavigateTo($"/article-editor/{id}");
     }
 }
