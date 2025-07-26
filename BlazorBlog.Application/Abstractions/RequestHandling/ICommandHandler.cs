@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace BlazorBlog.Application.Abstractions.RequestHandling;
+﻿namespace BlazorBlog.Application.Abstractions.RequestHandling;
 
 public interface ICommandHandler<TCommand> : IRequestHandler<TCommand, Result>
     where TCommand : ICommand

@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace BlazorBlog.Application.Abstractions.RequestHandling;
+﻿namespace BlazorBlog.Application.Abstractions.RequestHandling;
 
 public interface IQueryHandler<TQuery, TResponse> : IRequestHandler<TQuery, Result<TResponse>>
     where TQuery : IQuery<TResponse>

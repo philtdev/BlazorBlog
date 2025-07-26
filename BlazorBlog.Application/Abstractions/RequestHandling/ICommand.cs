@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace BlazorBlog.Application.Abstractions.RequestHandling;
+﻿namespace BlazorBlog.Application.Abstractions.RequestHandling;
 
 public interface ICommand : IRequest<Result>
 {
