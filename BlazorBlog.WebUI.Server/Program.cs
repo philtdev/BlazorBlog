@@ -1,7 +1,7 @@
 using BlazorBlog.Application;
-using BlazorBlog.Application.Articles;
 using BlazorBlog.Infrastructure;
 using BlazorBlog.WebUI.Server;
+using BlazorBlog.WebUI.Server.Features.Articles;
 
 using Scalar.AspNetCore;
 
@@ -43,18 +43,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(BlazorBlog.WebUI.Client._Imports).Assembly);
 
-app.MapGet("api/Articles", async (IArticlesOverviewService articlesOverviewService) =>
-{
-    var result = await articlesOverviewService.GetArticlesByCurrentUserAsync();
-
-    return Results.Ok(result);
-});
-
-app.MapPatch("api/Articles/{id:int}", async (int id, IArticlesOverviewService articlesOverviewService) =>
-{
-    var result = await articlesOverviewService.TogglePublishArticleAsync(id);
-
-    return result is null ? Results.BadRequest() : Results.Ok(result);
-});
+app.MapArticlesEndpoints();
 
 app.Run();
