@@ -41,6 +41,11 @@ else
         <TemplateColumn>
             <button @onclick="() => EditArticle(context.Id)" class="px-6 py-2 rounded-sm shadow-sm bg-blue-400 text-gray-900 hover:bg-blue-300">Edit</button>
         </TemplateColumn>
+        <TemplateColumn>
+            <button @onclick="() => TogglePublishArticle(context.Id)" class="px-6 py-2 rounded-sm shadow-sm bg-blue-400 text-gray-900 hover:bg-blue-300">
+                @(context.IsPublished ? "Unpublish" : "Publish")
+            </button>
+        </TemplateColumn>
     </QuickGrid>
 }
 
@@ -53,6 +58,25 @@ else
 
         if (articles is null)
             articles = [];
+    }
+
+    private async Task TogglePublishArticle(int id)
+    {
+        var result = await Http.PatchAsync($"api/Articles/{id}", null);
+
+        if (result.IsSuccessStatusCode && articles is not null)
+        {
+            var updatedArticle = await result.Content.ReadFromJsonAsync<ArticleResponse>();
+
+            var index = articles.FindIndex(a => a.Id == updatedArticle.Id);
+
+            if (index != -1)
+            {
+                articles[index] = updatedArticle;
+
+                StateHasChanged();
+            }
+        }
     }
 
     private void EditArticle(int id)
