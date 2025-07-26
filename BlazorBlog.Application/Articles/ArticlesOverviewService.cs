@@ -2,8 +2,6 @@
 using BlazorBlog.Application.Articles.GetArticlesByCurrentUser;
 using BlazorBlog.Application.Articles.TogglePublishArticle;
 
-using MediatR;
-
 namespace BlazorBlog.Application.Articles;
 
 public class ArticlesOverviewService : IArticlesOverviewService
