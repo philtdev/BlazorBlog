@@ -2,6 +2,6 @@
 
 public interface IArticlesOverviewService
 {
-    Task<ArticleResponse?> TogglePublishArticlAsync(int articleId);
+    Task<ArticleResponse?> TogglePublishArticleAsync(int articleId);
     Task<List<ArticleResponse>> GetArticlesByCurrentUserAsync();
 }

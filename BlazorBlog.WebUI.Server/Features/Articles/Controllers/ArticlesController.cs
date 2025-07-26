@@ -1,8 +1,4 @@
 ﻿using BlazorBlog.Application.Articles;
-using BlazorBlog.Application.Articles.GetArticlesByCurrentUser;
-using BlazorBlog.Application.Articles.TogglePublishArticle;
-
-using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,29 +7,29 @@ namespace BlazorBlog.WebUI.Server.Features.Articles.Controllers;
 [ApiController]
 public class ArticlesController : ControllerBase
 {
-    private readonly ISender _sender;
+    private readonly IArticlesOverviewService _articlesOverviewService;
 
-    public ArticlesController(ISender sender)
+    public ArticlesController(IArticlesOverviewService articlesOverviewService)
     {
-        _sender = sender;
+        _articlesOverviewService = articlesOverviewService;
     }
 
     [HttpGet]
     public async Task<ActionResult<List<ArticleResponse>>> GetArticlesByCurrentUser()
     {
-        var result = await _sender.Send(new GetArticlesByCurrentUserQuery());
+        var result = await _articlesOverviewService.GetArticlesByCurrentUserAsync();
 
-        return Ok(result.Value);
+        return Ok(result);
     }
 
     [HttpPatch("{id}")]
     public async Task<ActionResult<ArticleResponse>> TogglePublishArticle(int id)
     {
-        var result = await _sender.Send(new TogglePublishArticleCommand { ArticleId = id });
+        var result = await _articlesOverviewService.TogglePublishArticleAsync(id);
 
-        if (result.Failure)
-            return BadRequest(result.Error);
+        if (result is null)
+            return BadRequest();
 
-        return Ok(result.Value);
+        return Ok(result);
     }
 }

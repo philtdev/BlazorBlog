@@ -22,7 +22,7 @@ public class ArticlesOverviewService : IArticlesOverviewService
         return result;
     }
 
-    public async Task<ArticleResponse?> TogglePublishArticlAsync(int articleId)
+    public async Task<ArticleResponse?> TogglePublishArticleAsync(int articleId)
     {
         var result = await _sender.Send(new TogglePublishArticleCommand { ArticleId = articleId });
 
