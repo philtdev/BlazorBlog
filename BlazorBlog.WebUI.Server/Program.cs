@@ -1,7 +1,8 @@
 using BlazorBlog.Application;
 using BlazorBlog.Infrastructure;
 using BlazorBlog.WebUI.Server;
-using BlazorBlog.WebUI.Server.Features.Articles;
+
+using Carter;
 
 using Scalar.AspNetCore;
 
@@ -17,6 +18,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
+
+builder.Services.AddCarter();
 
 var app = builder.Build();
 
@@ -43,6 +46,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(BlazorBlog.WebUI.Client._Imports).Assembly);
 
-app.MapArticlesEndpoints();
+app.MapCarter();
 
 app.Run();

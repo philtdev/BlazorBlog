@@ -1,10 +1,12 @@
 ﻿using BlazorBlog.Application.Articles;
 
+using Carter;
+
 namespace BlazorBlog.WebUI.Server.Features.Articles;
 
-public static class ArticlesEndpoints
+public class ArticlesEndpoints : ICarterModule
 {
-    public static IEndpointRouteBuilder MapArticlesEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("api/Articles");
 
@@ -21,7 +23,5 @@ public static class ArticlesEndpoints
 
             return result is null ? Results.BadRequest() : Results.Ok(result);
         });
-
-        return app;
     }
 }
